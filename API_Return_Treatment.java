@@ -44,15 +44,20 @@ class Dados_Retorno {
                 .append(item).append("\n}").toString();
     }
     
-    public List<Item> getNumeroDeConsultas(){
-    	return item;
+    public String getNumeroDeConsultas(){
+    	return api_consultas;
     }
     
     public String getSituacaoCadastral() {
     	
     	String[] itens = item.stream().map(String::valueOf).toArray(String[]::new);
     	
-    	return itens[0];
+    	if (itens == null) {
+    		return "Médico não encontrado!";
+    	} else {
+    		return itens[0];
+    	}
+    	
     }
     
 }
@@ -78,6 +83,7 @@ class Item {
         
     @Override
     public String toString() {
+    	//Retorna somente a situação cadastral que é o que importa neste caso.
         return situacao;
         		
         		/*new StringBuilder().append("\n	Item\n	{").append("\n	Tipo: ")
@@ -91,7 +97,7 @@ class Item {
     
     public String getSituacao(){
     	
-    	return situacao;
+    	return situacao.toString();
     }
     
 }
@@ -135,32 +141,8 @@ public class API_Return_Treatment {
 				
 				Dados_Retorno dados_retorno = gson.fromJson(retorno, Dados_Retorno.class);//Pega o JSON que veio da API e coloca dentro da Classe que criei no começo
 				
-				System.out.println(dados_retorno.getNumeroDeConsultas());
-				
-				//Abaixo printa a situação do médico 
-				/*
-				if (dados_retorno.getSituacaoCadastral().equals("Transferido")){
-					System.out.println("CRM Inválido. Motivo: Médico Trasferido.");
-				} else if (dados_retorno.getSituacaoCadastral().equals("Aposentado")) {
-					System.out.println("CRM Inválido. Motivo: Médico Aposentado.");
-				} else if (dados_retorno.getSituacaoCadastral().equals("Cancelado")) {
-					System.out.println("CRM Inválido. Motivo: CRM Cancelado.");
-				} else if (dados_retorno.getSituacaoCadastral().equals("Cassado")) {
-					System.out.println("CRM Inválido. Motivo: Médico Cassado.");
-				} else if (dados_retorno.getSituacaoCadastral().equals("Falecido")) {
-					System.out.println("CRM Inválido. Motivo: Médico Falecido.");
-				} else if (dados_retorno.getSituacaoCadastral().equals("Interdição cautelar - total")) {
-					System.out.println("CRM Inválido. Motivo: Médico Interditado como Medida Cautelar.");
-				} else if (dados_retorno.getSituacaoCadastral().equals("Suspensão temporária")) {
-					System.out.println("CRM Inválido. Motivo: CRM Suspenso Temporariamente.");
-				} else if (dados_retorno.getSituacaoCadastral().equals("Suspenso - total")) {
-					System.out.println("CRM Inválido. Motivo: CRM Suspenso.");
-				} else if (dados_retorno.getSituacaoCadastral().equals("Suspenso por ordem judicial - total")) {
-					System.out.println("CRM Inválido. Motivo: CRM Suspenso por Ordem Judicial.");
-				} else {
-					System.out.println("Não de adequa.");
-				}
-				*/
+				System.out.println(dados_retorno.getSituacaoCadastral());
+
 				conector.disconnect();
 
 			} 
